@@ -24,9 +24,18 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         }
         else
         {
-            if (Input.Len() != HiddenWord.Len())
+            --Lives;
+            PrintLine(TEXT("Lost a life!"));
+            if (Lives > 0)
             {
-                PrintLine(TEXT("The Hidden Word is %i charactest long. \nYou have lost!"), HiddenWord.Len());
+                if (Input.Len() != HiddenWord.Len())
+                {
+                    PrintLine(TEXT("Wrong answer, try again! You have %i lives remaining."), Lives);
+                }
+            }
+            else
+            {
+                PrintLine(TEXT("You have no lives left :("));
                 EndGame();
             }
         }
@@ -56,10 +65,11 @@ void UBullCowCartridge::SetupGame()
     PrintLine(TEXT("Hello, cowpoke!"));
 
     HiddenWord = TEXT("machine"); // Set HiddenWord
-    Lives = 5; // SetLives
+    Lives = HiddenWord.Len(); // SetLives
     bGameOver = false;
 
     PrintLine(TEXT("Press Tab to start print in terminal."));
+    PrintLine(TEXT("You have %i lives"), Lives);
     PrintLine(TEXT("Guess the %i letter word..."), HiddenWord.Len());
 }
 
