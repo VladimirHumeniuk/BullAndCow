@@ -26,7 +26,7 @@ void UBullCowCartridge::SetupGame()
     // Welcome the Player
     PrintLine(TEXT("Hello, cowpoke!"));
 
-    HiddenWord = TEXT("machine"); // Set HiddenWord
+    HiddenWord = TEXT("cakes"); // Set HiddenWord
     Lives = HiddenWord.Len(); // SetLives
     bGameOver = false;
 
@@ -81,9 +81,15 @@ void UBullCowCartridge::ProcessGuess(FString Guess)
 
 bool UBullCowCartridge::IsIsogram(FString Word) const
 {
-    for (int32 i = 0; i < Word.Len(); i++)
+    for (int32 Index = 0; Index < Word.Len(); Index++)
     {
-        PrintLine(TEXT("%c"), Word[i]);
+        for(int32 Comparison = Index + 1; Comparison < Word.Len(); Comparison++)
+       {
+           if (Word[Index] == Word[Comparison])
+           {
+               return false;
+           }
+        }
     }
 
     return true;
